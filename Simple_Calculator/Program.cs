@@ -11,7 +11,7 @@
 
 
             options:
-                Console.WriteLine("Select an operation \n 1.Add \n 2.Subtract \n 3.Multiply \n 4.Divide \n 5.Average \n 6.Sin \n 7.Cos \n 8.Tan \n 9.Square Root");
+                Console.WriteLine("\n Select an operation \n 1.Add \n 2.Subtract \n 3.Multiply \n 4.Divide \n 5.Average \n 6.Sin \n 7.Cos \n 8.Tan \n 9.Square Root \n 10.Quadratic Equation \n 11.Mensuration");
                 string option = Console.ReadLine();
                 Calc calc = new Calc();
                 if (option == "1")
@@ -167,6 +167,114 @@
                     double answer = Math.Sqrt(x);
                     Console.WriteLine($"Answer: {answer}");
                     ans = answer;
+                }
+
+                else if (option == "10")
+                {
+                enterCoefficients:
+                    Console.WriteLine("Enter the coefficients of the quadratic equation (ax^2 + bx + c = 0):");
+                    Console.WriteLine("Enter the value of a:");
+                    if (!double.TryParse(Console.ReadLine(), out double a))
+                    {
+                        Console.WriteLine("Invalid input. Please enter a valid number for 'a'.");
+                        goto enterCoefficients;
+                    }
+
+                    Console.WriteLine("Enter the value of b:");
+                    if (!double.TryParse(Console.ReadLine(), out double b))
+                    {
+                        Console.WriteLine("Invalid input. Please enter a valid number for 'b'.");
+                        goto enterCoefficients;
+                    }
+
+                    Console.WriteLine("Enter the value of c:");
+                    if (!double.TryParse(Console.ReadLine(), out double c))
+                    {
+                        Console.WriteLine("Invalid input. Please enter a valid number for 'c'.");
+                        goto enterCoefficients;
+                    }
+
+                    
+                    double[] roots = calc.QuadraticEquation(a, b, c);
+
+                    if (roots.Length == 0)
+                    {
+                        Console.WriteLine("The quadratic equation has no real roots.");
+                    }
+                    else if (roots.Length == 1)
+                    {
+                        Console.WriteLine($"The quadratic equation has one real root: {roots[0]}");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"The quadratic equation has two real roots: {roots[0]} and {roots[1]}");
+                    }
+
+                    goto options; 
+                }
+
+
+
+
+                else if (option == "11")
+                {
+                mensurationOptions:
+                    Console.WriteLine("Select a mensuration option:");
+                    Console.WriteLine("1. Area of a circle");
+                    Console.WriteLine("2. Circumference of a circle");
+                    Console.WriteLine("3. Volume of a cylinder");
+                    string mensurationOption = Console.ReadLine();
+                   
+
+                    if (mensurationOption == "1")
+                    {
+                        Console.WriteLine("Enter the radius of the circle:");
+                    enterRadius:
+                        if (!double.TryParse(Console.ReadLine(), out double circleRadius))
+                        {
+                            Console.WriteLine("Invalid input. Please enter a valid number for the radius:");
+                            goto enterRadius;
+                        }
+                        double circleArea = calc.CircleArea(circleRadius);
+                        Console.WriteLine($"Area of the circle: {circleArea}");
+                    }
+                    else if (mensurationOption == "2")
+                    {
+                        Console.WriteLine("Enter the radius of the circle:");
+                    enterRadiusCircum:
+                        if (!double.TryParse(Console.ReadLine(), out double circleRadiusCircum))
+                        {
+                            Console.WriteLine("Invalid input. Please enter a valid number:");
+                            goto enterRadiusCircum;
+                        }
+                        double circleCircumference = calc.CircleCircum(circleRadiusCircum);
+                        Console.WriteLine($"Circumference of the circle: {circleCircumference}");
+                    }
+                    else if (mensurationOption == "3")
+                    {
+                        Console.WriteLine("Enter the radius of the cylinder:");
+                    enterRadiusCylinder:
+                        if (!double.TryParse(Console.ReadLine(), out double cylinderRadius))
+                        {
+                            Console.WriteLine("Invalid input. Please enter a valid number:");
+                            goto enterRadiusCylinder;
+                        }
+                        Console.WriteLine("Enter the height of the cylinder:");
+                        if (!double.TryParse(Console.ReadLine(), out double cylinderHeight))
+                        {
+                            Console.WriteLine("Invalid input. Please enter a valid number:");
+                            goto enterRadiusCylinder; 
+                        }
+                        double cylinderVolume = calc.CylinderVolume(cylinderRadius, cylinderHeight);
+                        Console.WriteLine($"Volume of the cylinder: {cylinderVolume}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid option. Please select a valid mensuration option.");
+                        goto mensurationOptions;
+                    }
+
+                    goto options;
                 }
 
 

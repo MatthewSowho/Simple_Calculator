@@ -56,5 +56,49 @@ namespace Simple_Calculator
             return sum / numbers.Length;
         }
 
+
+
+        public double[] QuadraticEquation(double a, double b, double c)
+        {
+            double numerator = b * b - (4 * a * c);
+            double[] roots;
+
+            if (numerator > 0)
+            {
+                double root1 = (-b + Math.Sqrt(numerator)) / (2 * a);
+                double root2 = (-b - Math.Sqrt(numerator)) / (2 * a);
+                roots = new double[] { root1, root2 };
+            }
+            else if (numerator == 0)
+            {
+                double root = -b / (2 * a);
+                roots = new double[] { root };
+            }
+            else
+            {
+                roots = new double[0]; 
+            }
+
+            return roots;
+        }
+
+
+
+        public double CircleArea(double radius)
+        {
+            return Math.PI * radius * radius;
+        }
+
+        public double CircleCircum(double radius)
+        {
+            return 2 * Math.PI * radius;
+        }
+
+        public double CylinderVolume(double radius, double height)
+        {
+            return Math.PI * radius * radius * height;
+        }
+
+
     }
 }
