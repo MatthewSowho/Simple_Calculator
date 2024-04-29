@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Simple_Calculator
 {
     public class Calc
     {
         public int Add(int x, int y)
         {
-            int answer= x + y;
+            int answer = x + y;
             Console.Write("Answer = ");
             Console.Write(answer);
             return answer;
@@ -76,7 +71,7 @@ namespace Simple_Calculator
             }
             else
             {
-                roots = new double[0]; 
+                roots = new double[0];
             }
 
             return roots;
@@ -98,7 +93,5 @@ namespace Simple_Calculator
         {
             return Math.PI * radius * radius * height;
         }
-
-
     }
 }
