@@ -1,277 +1,420 @@
-﻿
-using System;
+﻿using System;
 
 namespace Simple_Calculator
 {
+
+    static class Input
+    {
+        public static double firstNumber { get; set; }
+    }
     public static class Operations
     {
+        public static Calc calc = new Calc();
         public static void Begin()
         {
             double ans = 0;
-            while (true)
+            bool endOfLife = false;
+            while (!endOfLife)
             {
-
             options:
-                Console.WriteLine("\n Select an operation \n 1.Add \n 2.Subtract \n 3.Multiply \n 4.Divide \n 5.Average \n 6.Sin \n 7.Cos \n 8.Tan \n 9.Square Root \n 10.Quadratic Equation \n 11.Mensuration");
+                Console.WriteLine("\n Select an operation \n 1.Add \n 2.Subtract \n 3.Multiply \n 4.Divide \n 5.Average \n 6.Sin \n 7.Cos \n 8.Tan \n 9.Square Root \n 10.Quadratic Equation \n 11.Mensuration \n 12.Number to word \n 13.Age Calculator \n 14.Days Between Dates \n 15.Leap Year Calculator");
+                Console.WriteLine("Type EXIT to close the Calculator");
                 string option = Console.ReadLine();
-                Calc calc = new Calc();
 
                 switch (option)
                 {
                     case "1":
-                        Console.WriteLine("Input two numbers");
-                        Console.WriteLine("First Number:");
-                    first1:
-                        if (!int.TryParse(Console.ReadLine(), out int x1))
-                        {
-                            Math.Sin(x1);
-                            Console.WriteLine("This is not a number");
-                            goto first1;
-                        }
-                        Console.WriteLine("Second Number:");
-                    second1:
-                        if (!int.TryParse(Console.ReadLine(), out int y1))
-                        {
-                            Console.WriteLine("This is not a number");
-                            goto second1;
-                        }
-                        calc.Add(x1, y1);
+                        AddOperation();
                         break;
 
                     case "2":
-                        Console.WriteLine("Input two numbers");
-                        Console.WriteLine("First Number:");
-                    first2:
-                        if (!int.TryParse(Console.ReadLine(), out int x2))
-                        {
-                            Console.WriteLine("This is not a number");
-                            goto first2;
-                        }
-                        Console.WriteLine("Second Number:");
-                    second2:
-                        if (!int.TryParse(Console.ReadLine(), out int y2))
-                        {
-                            Console.WriteLine("This is not a number");
-                            goto second2;
-                        }
-                        calc.Subtract(x2, y2);
+                        SubtractOperation();
                         break;
 
                     case "3":
-                        Console.WriteLine("Input two numbers");
-                        Console.WriteLine("First Number:");
-                    first3:
-                        if (!int.TryParse(Console.ReadLine(), out int x3))
-                        {
-                            Console.WriteLine("This is not a number");
-                            goto first3;
-                        }
-                        Console.WriteLine("Second Number:");
-                    second3:
-                        if (!int.TryParse(Console.ReadLine(), out int y3))
-                        {
-                            Console.WriteLine("This is not a number");
-                            goto second3;
-                        }
-                        calc.Multiply(x3, y3);
+                        MultiplyOperation();
                         break;
 
                     case "4":
-                        Console.WriteLine("Input two numbers");
-                        Console.WriteLine("First Number:");
-                    first4:
-                        if (!int.TryParse(Console.ReadLine(), out int x4))
-                        {
-                            Console.WriteLine("This is not a number");
-                            goto first4;
-                        }
-                        Console.WriteLine("Second Number:");
-                    second4:
-                        if (!int.TryParse(Console.ReadLine(), out int y4))
-                        {
-                            Console.WriteLine("This is not a number");
-                            goto second4;
-                        }
-                        calc.Divide(x4, y4);
+                        DivideOperation();
                         break;
 
                     case "5":
-                    input5:
-                        Console.WriteLine("Enter numbers separated by commas:");
-                        string input5 = Console.ReadLine();
-
-
-                        string[] numberStrings5 = input5.Split(',');
-                        double[] numbers5 = new double[numberStrings5.Length];
-
-                        for (int i = 0; i < numberStrings5.Length; i++)
-                        {
-                            if (!double.TryParse(numberStrings5[i], out numbers5[i]))
-                            {
-                                Console.WriteLine($"Invalid input: {numberStrings5[i]} is not a valid number.");
-                                goto input5;
-                            }
-                        }
-
-                        double average5 = calc.CalculateAverage(numbers5);
-                        Console.WriteLine($"The average is: {average5}");
+                        AverageOperation();
                         break;
 
                     case "6":
-                    input6:
-                        Console.WriteLine("Enter a Number");
-                        if (!double.TryParse(Console.ReadLine(), out double x6))
-                        {
-                            goto input6;
-                        }
-                        double answer6 = Math.Sin(x6);
-                        Console.WriteLine($"Answer: {answer6}");
+                        SinOperation();
                         break;
 
                     case "7":
-                    input7:
-                        Console.WriteLine("Enter a Number");
-                        if (!double.TryParse(Console.ReadLine(), out double x7))
-                        {
-                            goto input7;
-                        }
-                        double answer7 = Math.Cos(x7);
-                        Console.WriteLine($"Answer: {answer7}");
+                        CosOperation();
                         break;
 
                     case "8":
-                    input8:
-                        Console.WriteLine("Enter a Number");
-                        if (!double.TryParse(Console.ReadLine(), out double x8))
-                        {
-                            goto input8;
-                        }
-                        double answer8 = Math.Tan(x8);
-                        Console.WriteLine($"Answer: {answer8}");
+                        TanOperation();
                         break;
 
                     case "9":
-                    input9:
-                        Console.WriteLine("Enter a Number");
-                        if (!double.TryParse(Console.ReadLine(), out double x9))
-                        {
-                            goto input9;
-                        }
-                        double answer9 = Math.Sqrt(x9);
-                        Console.WriteLine($"Answer: {answer9}");
-                        ans = answer9;
+                        SquareRootOperation();
                         break;
 
                     case "10":
-                    enterCoefficients:
-                        Console.WriteLine("Enter the coefficients of the quadratic equation (ax^2 + bx + c = 0):");
-                        Console.WriteLine("Enter the value of a:");
-                        if (!double.TryParse(Console.ReadLine(), out double a10))
-                        {
-                            Console.WriteLine("Invalid input. Please enter a valid number for 'a'.");
-                            goto enterCoefficients;
-                        }
-
-                        Console.WriteLine("Enter the value of b:");
-                        if (!double.TryParse(Console.ReadLine(), out double b10))
-                        {
-                            Console.WriteLine("Invalid input. Please enter a valid number for 'b'.");
-                            goto enterCoefficients;
-                        }
-
-                        Console.WriteLine("Enter the value of c:");
-                        if (!double.TryParse(Console.ReadLine(), out double c10))
-                        {
-                            Console.WriteLine("Invalid input. Please enter a valid number for 'c'.");
-                            goto enterCoefficients;
-                        }
-
-
-                        double[] roots10 = calc.QuadraticEquation(a10, b10, c10);
-
-                        if (roots10.Length == 0)
-                        {
-                            Console.WriteLine("The quadratic equation has no real roots.");
-                        }
-                        else if (roots10.Length
-
- == 1)
-                        {
-                            Console.WriteLine($"The quadratic equation has one real root: {roots10[0]}");
-                        }
-                        else
-                        {
-                            Console.WriteLine($"The quadratic equation has two real roots: {roots10[0]} and {roots10[1]}");
-                        }
-
-                        goto options;
+                        QuadraticEquationOperation();
+                        break;
 
                     case "11":
-                    mensurationOptions:
-                        Console.WriteLine("Select a mensuration option:");
-                        Console.WriteLine("1. Area of a circle");
-                        Console.WriteLine("2. Circumference of a circle");
-                        Console.WriteLine("3. Volume of a cylinder");
-                        string mensurationOption = Console.ReadLine();
+                        MensurationOperation();
+                        break;
 
+                    case "12":
+                        ConvertToWordsOperation();
+                        break;
 
-                        if (mensurationOption == "1")
-                        {
-                            Console.WriteLine("Enter the radius of the circle:");
-                        enterRadius1:
-                            if (!double.TryParse(Console.ReadLine(), out double circleRadius1))
-                            {
-                                Console.WriteLine("Invalid input. Please enter a valid number for the radius:");
-                                goto enterRadius1;
-                            }
-                            double circleArea1 = calc.CircleArea(circleRadius1);
-                            Console.WriteLine($"Area of the circle: {circleArea1}");
-                        }
-                        else if (mensurationOption == "2")
-                        {
-                            Console.WriteLine("Enter the radius of the circle:");
-                        enterRadius2:
-                            if (!double.TryParse(Console.ReadLine(), out double circleRadiusCircum2))
-                            {
-                                Console.WriteLine("Invalid input. Please enter a valid number:");
-                                goto enterRadius2;
-                            }
-                            double circleCircumference2 = calc.CircleCircum(circleRadiusCircum2);
-                            Console.WriteLine($"Circumference of the circle: {circleCircumference2}");
-                        }
-                        else if (mensurationOption == "3")
-                        {
-                            Console.WriteLine("Enter the radius of the cylinder:");
-                        enterRadius3:
-                            if (!double.TryParse(Console.ReadLine(), out double cylinderRadius3))
-                            {
-                                Console.WriteLine("Invalid input. Please enter a valid number:");
-                                goto enterRadius3;
-                            }
-                            Console.WriteLine("Enter the height of the cylinder:");
-                            if (!double.TryParse(Console.ReadLine(), out double cylinderHeight3))
-                            {
-                                Console.WriteLine("Invalid input. Please enter a valid number:");
-                                goto enterRadius3;
-                            }
-                            double cylinderVolume3 = calc.CylinderVolume(cylinderRadius3, cylinderHeight3);
-                            Console.WriteLine($"Volume of the cylinder: {cylinderVolume3}");
-                        }
-                        else
-                        {
-                            Console.WriteLine("Invalid option. Please select a valid mensuration option.");
-                            goto mensurationOptions;
-                        }
+                    case "13":
+                        CurrentAgeOperation();
+                        break;
 
-                        goto options;
+                    case "14":
+                        DaysOperation();
+                        break;
+
+                    case "15":
+                        LeapYearOperation();
+                        break;
+
+                    case "EXIT":
+                        endOfLife = true;
+                        break;
+
 
                     default:
                         Console.WriteLine("Input a valid option");
                         goto options;
                 }
-
-
             }
+        }
+
+        public static void AddOperation()
+        {
+            int x = 0;
+            Console.WriteLine("Input two numbers");
+            Console.WriteLine("First Number:");
+        input:
+            try
+            {
+                Input.firstNumber = int.Parse(Console.ReadLine());
+                Math.Sin(x);
+                Console.WriteLine("This is not a number");
+                goto input;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("An error occurred. Here is the detail of the error. " + e.Message);
+            }
+            Console.WriteLine("Second Number:");
+        second:
+            if (!int.TryParse(Console.ReadLine(), out int y))
+            {
+                Console.WriteLine("This is not a number");
+                goto second;
+            }
+            calc.Add(x, y);
+        }
+
+        public static void SubtractOperation()
+        {
+            Console.WriteLine("Input two numbers");
+            Console.WriteLine("First Number:");
+        input:
+            if (!int.TryParse(Console.ReadLine(), out int x))
+            {
+                Console.WriteLine("This is not a number");
+                goto input;
+            }
+            Console.WriteLine("Second Number:");
+        second:
+            if (!int.TryParse(Console.ReadLine(), out int y))
+            {
+                Console.WriteLine("This is not a number");
+                goto second;
+            }
+            calc.Subtract(x, y);
+        }
+
+        public static void MultiplyOperation()
+        {
+            Console.WriteLine("Input two numbers");
+            Console.WriteLine("First Number:");
+        input:
+            if (!int.TryParse(Console.ReadLine(), out int x))
+            {
+                Console.WriteLine("This is not a number");
+                goto input;
+            }
+            Console.WriteLine("Second Number:");
+        second:
+            if (!int.TryParse(Console.ReadLine(), out int y))
+            {
+                Console.WriteLine("This is not a number");
+                goto second;
+            }
+            calc.Multiply(x, y);
+        }
+
+        public static void DivideOperation()
+        {
+            Console.WriteLine("Input two numbers");
+            Console.WriteLine("First Number:");
+        input:
+            if (!int.TryParse(Console.ReadLine(), out int x))
+            {
+                Console.WriteLine("This is not a number");
+                goto input;
+            }
+            Console.WriteLine("Second Number:");
+        second:
+            if (!int.TryParse(Console.ReadLine(), out int y))
+            {
+                Console.WriteLine("This is not a number");
+                goto second;
+            }
+            calc.Divide(x, y);
+        }
+
+        public static void AverageOperation()
+        {
+        input:
+            Console.WriteLine("Enter numbers separated by commas:");
+            string input = Console.ReadLine();
+
+
+            string[] numberStrings = input.Split(',');
+            double[] numbers = new double[numberStrings.Length];
+
+            for (int i = 0; i < numberStrings.Length; i++)
+            {
+                if (!double.TryParse(numberStrings[i], out numbers[i]))
+                {
+                    Console.WriteLine($"Invalid input: {numberStrings[i]} is not a valid number.");
+                    goto input;
+                }
+            }
+
+            double average = calc.CalculateAverage(numbers);
+            Console.WriteLine($"The average is: {average}");
+        }
+
+        public static void SinOperation()
+        {
+        input:
+            Console.WriteLine("Enter a Number");
+            if (!double.TryParse(Console.ReadLine(), out double x))
+            {
+                goto input;
+            }
+            double answer = Math.Sin(x);
+            Console.WriteLine($"Answer: {answer}");
+        }
+
+        public static void CosOperation()
+        {
+        input:
+            Console.WriteLine("Enter a Number");
+            if (!double.TryParse(Console.ReadLine(), out double x))
+            {
+                goto input;
+            }
+            double answer = Math.Cos(x);
+            Console.WriteLine($"Answer: {answer}");
+        }
+
+        public static void TanOperation()
+        {
+        input:
+            Console.WriteLine("Enter a Number");
+            if (!double.TryParse(Console.ReadLine(), out double x))
+            {
+                goto input;
+            }
+            double answer = Math.Tan(x);
+            Console.WriteLine($"Answer: {answer}");
+        }
+
+        public static void SquareRootOperation()
+        {
+        input:
+            Console.WriteLine("Enter a Number");
+            if (!double.TryParse(Console.ReadLine(), out double x))
+            {
+                goto input;
+            }
+            double answer = Math.Sqrt(x);
+            Console.WriteLine($"Answer: {answer}");
+
+        }
+
+        public static void QuadraticEquationOperation()
+        {
+        enterCoefficients:
+            Console.WriteLine("Enter the coefficients of the quadratic equation (ax^2 + bx + c = 0):");
+            Console.WriteLine("Enter the value of a:");
+            if (!double.TryParse(Console.ReadLine(), out double a))
+            {
+                Console.WriteLine("Invalid input. Please enter a valid number for 'a'.");
+                goto enterCoefficients;
+            }
+
+            Console.WriteLine("Enter the value of b:");
+            if (!double.TryParse(Console.ReadLine(), out double b))
+            {
+                Console.WriteLine("Invalid input. Please enter a valid number for 'b'.");
+                goto enterCoefficients;
+            }
+
+            Console.WriteLine("Enter the value of c:");
+            if (!double.TryParse(Console.ReadLine(), out double c))
+            {
+                Console.WriteLine("Invalid input. Please enter a valid number for 'c'.");
+                goto enterCoefficients;
+            }
+
+
+            double[] roots = calc.QuadraticEquation(a, b, c);
+
+            if (roots.Length == 0)
+            {
+                Console.WriteLine("The quadratic equation has no real roots.");
+            }
+            else if (roots.Length == 1)
+            {
+                Console.WriteLine($"The quadratic equation has one real root: {roots[0]}");
+            }
+            else
+            {
+                Console.WriteLine($"The quadratic equation has two real roots: {roots[0]} and {roots[1]}");
+            }
+        }
+
+        public static void MensurationOperation()
+        {
+        mensurationOptions:
+            Console.WriteLine("Select a mensuration option:");
+            Console.WriteLine("1. Area of a circle");
+            Console.WriteLine("2. Circumference of a circle");
+            Console.WriteLine("3. Volume of a cylinder");
+            string mensurationOption = Console.ReadLine();
+
+
+            if (mensurationOption == "1")
+            {
+                Console.WriteLine("Enter the radius of the circle:");
+            enterRadius1:
+                if (!double.TryParse(Console.ReadLine(), out double circleRadius1))
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid number for the radius:");
+                    goto enterRadius1;
+                }
+                double circleArea1 = calc.CircleArea(circleRadius1);
+                Console.WriteLine($"Area of the circle: {circleArea1}");
+            }
+            else if (mensurationOption == "2")
+            {
+                Console.WriteLine("Enter the radius of the circle:");
+            enterRadius2:
+                if (!double.TryParse(Console.ReadLine(), out double circleRadiusCircum2))
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid number:");
+                    goto enterRadius2;
+                }
+                double circleCircumference2 = calc.CircleCircum(circleRadiusCircum2);
+                Console.WriteLine($"Circumference of the circle: {circleCircumference2}");
+            }
+            else if (mensurationOption == "3")
+            {
+                Console.WriteLine("Enter the radius of the cylinder:");
+            enterRadius3:
+                if (!double.TryParse(Console.ReadLine(), out double cylinderRadius3))
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid number:");
+                    goto enterRadius3;
+                }
+                Console.WriteLine("Enter the height of the cylinder:");
+                if (!double.TryParse(Console.ReadLine(), out double cylinderHeight3))
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid number:");
+                    goto enterRadius3;
+                }
+                double cylinderVolume3 = calc.CylinderVolume(cylinderRadius3, cylinderHeight3);
+                Console.WriteLine($"Volume of the cylinder: {cylinderVolume3}");
+            }
+            else
+            {
+                Console.WriteLine("Invalid option. Please select a valid mensuration option.");
+                goto mensurationOptions;
+            }
+        }
+
+        public static void ConvertToWordsOperation()
+        {
+            int number = 0;
+            Console.WriteLine("Type a Number");
+            try
+            {
+                number = int.Parse(Console.ReadLine());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("An error occurred. Here is the detail of the error. " + e.Message);
+            }
+
+            string answer = calc.ConvertToWords(number);
+            Console.WriteLine("Your number in words = " + answer);
+        }
+
+        public static void CurrentAgeOperation()
+
+        {
+            int birthYear;
+        input:
+            Console.WriteLine("Input your year of birth");
+            try
+            {
+                birthYear = int.Parse(Console.ReadLine());
+            }
+            catch (Exception e)
+            {
+
+                Console.WriteLine("An error occurred. Here is the detail of the error. " + e.Message);
+                goto input;
+            }
+
+            int age = calc.CurrentAge(birthYear);
+            Console.WriteLine("You are " + age + " years old");
+        }
+
+        public static void DaysOperation()
+        {
+            Console.WriteLine("Input the first date in (YYYY-MM-DD) format :");
+            DateTime one = DateTime.Parse(Console.ReadLine());
+            Console.WriteLine("Input the second date  in (YYYY-MM-DD) format :");
+            DateTime two = DateTime.Parse(Console.ReadLine());
+
+            int days = calc.NumberOfDays(one, two);
+            Console.WriteLine("Difference in days = " + days + " days");
+        }
+
+        public static void LeapYearOperation()
+        {
+        input:
+            Console.WriteLine("Type a year");
+            if (!int.TryParse(Console.ReadLine(), out int year))
+            {
+                Console.WriteLine("This is not a valid year");
+                goto input;
+            }
+            calc.LeapYear(year);
+
         }
     }
 }
