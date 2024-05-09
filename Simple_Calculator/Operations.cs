@@ -1,12 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace Simple_Calculator
 {
+   
 
-    static class Input
-    {
-        public static double firstNumber { get; set; }
-    }
     public static class Operations
     {
         public static Calc calc = new Calc();
@@ -17,7 +15,7 @@ namespace Simple_Calculator
             while (!endOfLife)
             {
             options:
-                Console.WriteLine("\n Select an operation \n 1.Add \n 2.Subtract \n 3.Multiply \n 4.Divide \n 5.Average \n 6.Sin \n 7.Cos \n 8.Tan \n 9.Square Root \n 10.Quadratic Equation \n 11.Mensuration \n 12.Number to word \n 13.Age Calculator \n 14.Days Between Dates \n 15.Leap Year Calculator");
+                Console.WriteLine("\n Select an operation \n 1.Add \n 2.Subtract \n 3.Multiply \n 4.Divide \n 5.Average \n 6.Sin \n 7.Cos \n 8.Tan \n 9.Square Root \n 10.Quadratic Equation \n 11.Mensuration \n 12.Number to word \n 13.Age Calculator \n 14.Days Between Dates \n 15.Leap Year Calculator \n 16.GPA");
                 Console.WriteLine("Type EXIT to close the Calculator");
                 string option = Console.ReadLine();
 
@@ -83,6 +81,10 @@ namespace Simple_Calculator
                         LeapYearOperation();
                         break;
 
+                    case "16":
+                        GPAOperation();
+                        break;
+
                     case "EXIT":
                         endOfLife = true;
                         break;
@@ -103,8 +105,7 @@ namespace Simple_Calculator
         input:
             try
             {
-                Input.firstNumber = int.Parse(Console.ReadLine());
-                Math.Sin(x);
+                x = int.Parse(Console.ReadLine());
                 Console.WriteLine("This is not a number");
                 goto input;
             }
@@ -416,5 +417,168 @@ namespace Simple_Calculator
             calc.LeapYear(year);
 
         }
+
+        public static void GPAOperation()
+        {
+        score1:
+            //    Console.WriteLine("Enter your score for Mathemathics");
+            //    if (!double.TryParse(Console.ReadLine(), out double score1))
+            //    {
+            //        Console.WriteLine("Input a valid score");
+            //        goto score1;
+            //    }
+            //    Console.WriteLine("Enter the number of units");
+            //    if (!int.TryParse(Console.ReadLine(), out int unit1))
+            //    {
+            //        Console.WriteLine("Input a valid number of units");
+            //        goto score1;
+            //    }
+
+            //score2:
+            //    Console.WriteLine("Enter your score for Physics");
+            //    if (!double.TryParse(Console.ReadLine(), out double score2))
+            //    {
+            //        Console.WriteLine("Input a valid score");
+            //        goto score2;
+            //    }
+            //    Console.WriteLine("Enter the number of units");
+            //    if (!int.TryParse(Console.ReadLine(), out int unit2))
+            //    {
+            //        Console.WriteLine("Input a valid number of units");
+            //        goto score2;
+            //    }
+            //score3:
+            //    Console.WriteLine("Enter your score for Biology");
+            //    if (!double.TryParse(Console.ReadLine(), out double score3))
+            //    {
+            //        Console.WriteLine("Input a valid score");
+            //        goto score3;
+            //    }
+            //    Console.WriteLine("Enter the number of units");
+            //    if (!int.TryParse(Console.ReadLine(), out int unit3))
+            //    {
+            //        Console.WriteLine("Input a valid number of units");
+            //        goto score3;
+            //    }
+            //score4:
+            //    Console.WriteLine("Enter your score for Chemistry");
+            //    if (!double.TryParse(Console.ReadLine(), out double score4))
+            //    {
+            //        Console.WriteLine("Input a valid score");
+            //        goto score4;
+            //    }
+            //    Console.WriteLine("Enter the number of units");
+            //    if (!int.TryParse(Console.ReadLine(), out int unit4))
+            //    {
+            //        Console.WriteLine("Input a valid number of units");
+            //        goto score4;
+            //    }
+            //    double result = calc.GPA(score1, score2, score3, score4, unit1, unit2, unit3, unit4);
+            //    Console.WriteLine("Your GPA is: " + result);
+
+            Console.WriteLine("Enter the number of courses");
+            int noOfCourses= int.Parse(Console.ReadLine());
+            Courses course = new Courses();
+            for (int count = 0; count < noOfCourses; count++)
+            {
+                Console.WriteLine("Enter Course " + (count +1)+ " Title");
+                string title = Console.ReadLine();
+                score:
+                Console.WriteLine("Enter Score");
+                if(!int.TryParse(Console.ReadLine(), out int score))
+                {
+                    Console.WriteLine("Enter a valid score");
+                    goto score;
+                }
+
+            units:
+                Console.WriteLine("Enter Number of Units");
+                if (!int.TryParse(Console.ReadLine(), out int units))
+                {
+                    Console.WriteLine("Enter a valid score");
+                    goto units;
+                }
+
+
+
+                Console.WriteLine("Has This Course Been Registered? Type YES");
+                string enrolled = Console.ReadLine();
+
+                
+                course.CourseTitle = title;
+                course.Score = score;
+                string grade;
+                course.Units = units;
+
+                double totalScore = 0;
+                double totalUnits = 0;
+                double GPA = 0;
+
+                if (enrolled.ToUpper() == "YES")
+                {
+                    course.isEnrolled = true;
+                   
+                }
+                else
+                {
+                    course.isEnrolled = false;
+                    
+                }
+                if (score >= 70)
+                {
+                    grade = "A";
+                }
+                else if (score >= 60)
+                {
+                    grade = "B";
+                }
+                else if (score >= 50)
+                {
+                    grade = "C";
+                }
+                else if (score < 45)
+                {
+                    grade = "D";
+                }
+                else
+                {
+                    grade = "F";
+                }
+                course.Grade = grade;
+               
+                totalScore += score;
+                totalUnits += units;
+                course.GPA = calc.GPA(totalScore,totalUnits);
+                calc.course.Add(course);
+            }
+            foreach (var courses in calc.course)
+            {
+                Console.WriteLine("Title: " + course.CourseTitle + "   Units: " + course.Units + "   Score: " + course.Score + "   Grade: " + course.Grade + "   Status: " + (course.isEnrolled ? "Registered" : "Unregistered"));
+            }
+            
+            Console.WriteLine("Your GPA = " + course.GPA);
+
+        }
+
+        
+        
+        
+
+        //Course - CourseTitle, Grade, Score, IsEnrolled = true;
+
+        //List<couse> courses = new List<couse>();
+        //Course course;
+        
+        //for(int count = 0; ) {
+        //   course = new Course { }
+     
+        //    COURSES.ADD(course)
+        //    }
+
+        //   var obj =  CalculateGP(courses)
+
+
+
+
     }
 }

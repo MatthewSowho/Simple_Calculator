@@ -8,18 +8,18 @@ namespace Simple_Calculator
             int answer;
             try
             {
-                 answer = x + y;
+                answer = x + y;
                 Console.Write("Answer = ");
                 Console.Write(answer);
             }
             catch (Exception e)
             {
 
-                throw e; 
+                throw e;
             }
 
 
-           
+
             return answer;
         }
 
@@ -105,7 +105,7 @@ namespace Simple_Calculator
         {
             return Math.PI * radius * radius * height;
 
-            
+
         }
 
 
@@ -164,20 +164,20 @@ namespace Simple_Calculator
 
         }
 
-        public int NumberOfDays(DateTime one , DateTime two)
+        public int NumberOfDays(DateTime one, DateTime two)
         {
             TimeSpan x = one - two;
             int days = (int)x.TotalDays;
-          
+
             return Math.Abs(days);
 
-             
+
 
         }
 
         public void LeapYear(int year)
         {
-            
+
             if (year % 4 == 0 && year % 100 != 0)
             {
                 Console.WriteLine("This is a leap year");
@@ -193,7 +193,25 @@ namespace Simple_Calculator
             }
         }
 
+        //public double GPA(double score1, double score2, double score3, double score4, int unit1, int unit2, int unit3, int unit4)
+        //{
+        //    double GPA = (score1 + score2 + score3 + score4) / (unit1 + unit2 + unit3 + unit4);
+        //    return GPA;
+        //}
 
+
+       public List<Courses> course = new List<Courses>();
+
+        public double GPA(double totalScore , double totalUnits)
+        {
+            double GPA = totalScore / totalUnits;
+            return GPA;
+        }
+
+        
+        //public void CalculateGP(List<Course> courses)
+
+        //    cousess
 
         // Number to Word
         // Word to Number
