@@ -200,12 +200,21 @@ namespace Simple_Calculator
         //}
 
 
-       public List<Courses> course = new List<Courses>();
+      
 
-        public double GPA(double totalScore , double totalUnits)
-        {
-            double GPA = totalScore / totalUnits;
-            return GPA;
+        public double GPA(List<Course> courses)
+        {   
+
+            
+            double totalUnits = 0;
+            int totalQualityPoints = 0;
+            foreach (var myCourse in courses)
+            {
+               
+                totalUnits += myCourse.Units;
+                totalQualityPoints += myCourse.QualityPoints;
+            }
+            return totalQualityPoints / totalUnits;
         }
 
         

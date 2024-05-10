@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Simple_Calculator
 {
@@ -8,6 +9,7 @@ namespace Simple_Calculator
     public static class Operations
     {
         public static Calc calc = new Calc();
+       
         public static void Begin()
         {
             double ans = 0;
@@ -418,74 +420,57 @@ namespace Simple_Calculator
 
         }
 
+        static List<Course> courses = new List<Course>();
+        
         public static void GPAOperation()
         {
-        score1:
-            //    Console.WriteLine("Enter your score for Mathemathics");
-            //    if (!double.TryParse(Console.ReadLine(), out double score1))
-            //    {
-            //        Console.WriteLine("Input a valid score");
-            //        goto score1;
-            //    }
-            //    Console.WriteLine("Enter the number of units");
-            //    if (!int.TryParse(Console.ReadLine(), out int unit1))
-            //    {
-            //        Console.WriteLine("Input a valid number of units");
-            //        goto score1;
-            //    }
+            option:
+            Console.WriteLine("Select an Option \n 1.Add Courses \n 2.View Courses \n 3.Calculate GPA");
+            string option = Console.ReadLine();
+            switch (option)
+            {
+                case "1":
+                    AddCourses();
+                    break;
 
-            //score2:
-            //    Console.WriteLine("Enter your score for Physics");
-            //    if (!double.TryParse(Console.ReadLine(), out double score2))
-            //    {
-            //        Console.WriteLine("Input a valid score");
-            //        goto score2;
-            //    }
-            //    Console.WriteLine("Enter the number of units");
-            //    if (!int.TryParse(Console.ReadLine(), out int unit2))
-            //    {
-            //        Console.WriteLine("Input a valid number of units");
-            //        goto score2;
-            //    }
-            //score3:
-            //    Console.WriteLine("Enter your score for Biology");
-            //    if (!double.TryParse(Console.ReadLine(), out double score3))
-            //    {
-            //        Console.WriteLine("Input a valid score");
-            //        goto score3;
-            //    }
-            //    Console.WriteLine("Enter the number of units");
-            //    if (!int.TryParse(Console.ReadLine(), out int unit3))
-            //    {
-            //        Console.WriteLine("Input a valid number of units");
-            //        goto score3;
-            //    }
-            //score4:
-            //    Console.WriteLine("Enter your score for Chemistry");
-            //    if (!double.TryParse(Console.ReadLine(), out double score4))
-            //    {
-            //        Console.WriteLine("Input a valid score");
-            //        goto score4;
-            //    }
-            //    Console.WriteLine("Enter the number of units");
-            //    if (!int.TryParse(Console.ReadLine(), out int unit4))
-            //    {
-            //        Console.WriteLine("Input a valid number of units");
-            //        goto score4;
-            //    }
-            //    double result = calc.GPA(score1, score2, score3, score4, unit1, unit2, unit3, unit4);
-            //    Console.WriteLine("Your GPA is: " + result);
+                case "2":
+                    ViewCourses();
+                    break;
 
+                case "3":
+                    CalculateGPA();
+                    break;
+
+                default:
+                    Console.WriteLine("Select a Valid Option");
+                    goto option;
+                    
+            }
+
+
+
+
+
+
+
+        }
+
+
+        public static void AddCourses()
+        {
             Console.WriteLine("Enter the number of courses");
-            int noOfCourses= int.Parse(Console.ReadLine());
-            Courses course = new Courses();
+            int noOfCourses = int.Parse(Console.ReadLine());
+            
             for (int count = 0; count < noOfCourses; count++)
             {
-                Console.WriteLine("Enter Course " + (count +1)+ " Title");
+                Course course = new Course();
+
+
+                Console.WriteLine("Enter Course " + (count + 1) + " Title");
                 string title = Console.ReadLine();
-                score:
+            score:
                 Console.WriteLine("Enter Score");
-                if(!int.TryParse(Console.ReadLine(), out int score))
+                if (!int.TryParse(Console.ReadLine(), out int score))
                 {
                     Console.WriteLine("Enter a valid score");
                     goto score;
@@ -504,74 +489,119 @@ namespace Simple_Calculator
                 Console.WriteLine("Has This Course Been Registered? Type YES");
                 string enrolled = Console.ReadLine();
 
-                
                 course.CourseTitle = title;
                 course.Score = score;
-                string grade;
                 course.Units = units;
 
-                double totalScore = 0;
-                double totalUnits = 0;
-                double GPA = 0;
 
                 if (enrolled.ToUpper() == "YES")
                 {
                     course.isEnrolled = true;
-                   
+
                 }
                 else
                 {
                     course.isEnrolled = false;
-                    
+
                 }
-                if (score >= 70)
-                {
-                    grade = "A";
-                }
-                else if (score >= 60)
-                {
-                    grade = "B";
-                }
-                else if (score >= 50)
-                {
-                    grade = "C";
-                }
-                else if (score < 45)
-                {
-                    grade = "D";
-                }
-                else
-                {
-                    grade = "F";
-                }
-                course.Grade = grade;
-               
-                totalScore += score;
-                totalUnits += units;
-                course.GPA = calc.GPA(totalScore,totalUnits);
-                calc.course.Add(course);
+                course.Grade = GradeOperation(course.Score);
+                course.GradePoints = PointsOperation(course.Score);
+                course.QualityPoints = course.GradePoints * course.Units;
+
+
+                courses.Add(course);
             }
-            foreach (var courses in calc.course)
-            {
-                Console.WriteLine("Title: " + course.CourseTitle + "   Units: " + course.Units + "   Score: " + course.Score + "   Grade: " + course.Grade + "   Status: " + (course.isEnrolled ? "Registered" : "Unregistered"));
-            }
-            
-            Console.WriteLine("Your GPA = " + course.GPA);
+
 
         }
 
-        
-        
-        
+        public static void ViewCourses()
+        {
+            foreach (Course myCourses in courses)
+            {
+                Console.WriteLine("Title: " + myCourses.CourseTitle + "   Units: " + myCourses.Units + "   Score: " + myCourses.Score + "   Grade: " + myCourses.Grade + "   Status: " + (myCourses.isEnrolled ? "Registered" : "Unregistered"));
+            }
+        }
+
+        public static void CalculateGPA()
+        {
+            double GPA = calc.GPA(courses);
+            Console.WriteLine("Your GPA = " + GPA);
+        }
+        public static int PointsOperation(int score)
+        {
+            
+            int qualityPoints;
+            if (score >= 70)
+            {
+                qualityPoints = 4;
+            }
+            else if (score >= 60)
+            {
+                qualityPoints = 3;
+            }
+            else if (score >= 50)
+            {
+                qualityPoints = 2;
+            }
+            else if (score < 45)
+            {
+                qualityPoints = 1;
+            }
+            else
+            {
+                qualityPoints = 0;
+            }
+
+            return qualityPoints;
+        }
+
+        public static string GradeOperation(int score)
+        {
+            string grade;
+            int qualityPoints;
+            if (score >= 70)
+            {
+                grade = "A";
+                qualityPoints = 4;
+            }
+            else if (score >= 60)
+            {
+                grade = "B";
+                qualityPoints = 3;
+            }
+            else if (score >= 50)
+            {
+                grade = "C";
+                qualityPoints = 2;
+            }
+            else if (score < 45)
+            {
+                grade = "D";
+                qualityPoints = 1;
+            }
+            else
+            {
+                grade = "F";
+                qualityPoints = 0;
+            }
+
+
+            return grade;
+        }
+
+
+
+
 
         //Course - CourseTitle, Grade, Score, IsEnrolled = true;
 
         //List<couse> courses = new List<couse>();
         //Course course;
-        
+
         //for(int count = 0; ) {
         //   course = new Course { }
-     
+
         //    COURSES.ADD(course)
         //    }
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Simple_Calculator
 {
-    public class Courses
+    public class Course
     {
         public string CourseTitle { get; set; }
         public int Score { get; set; }
@@ -15,7 +15,9 @@ namespace Simple_Calculator
 
         public int Units {  get; set; }
 
-        public double GPA { get; set; }
+        public int GradePoints { get; set; }
+
+        public int QualityPoints { get; set; }
 
         public bool isEnrolled { get; set; }
 
